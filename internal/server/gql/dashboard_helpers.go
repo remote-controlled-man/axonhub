@@ -691,10 +691,7 @@ func (r *queryResolver) fastestModels(ctx context.Context, input FastestChannels
 	}
 
 	// Fetch more items than needed to allow confidence-based filtering
-	sqlLimit := *input.Limit * 4
-	if sqlLimit < 20 {
-		sqlLimit = 20
-	}
+	sqlLimit := max(*input.Limit*4, 20)
 
 	query := qb.BuildThroughputQuery(
 		useDollarPlaceholders,
